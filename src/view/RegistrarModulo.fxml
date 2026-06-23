@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProductoController">
+    <content>
+        <VBox alignment="TOP_CENTER" spacing="25.0" style="-fx-padding: 40;">
+            <children>
+                <VBox alignment="CENTER" spacing="5.0">
+                    <children>
+                        <Label text="Registrar Producto">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <Label text="El ID se genera automáticamente al guardar." textFill="#7f8c8d" />
+                    </children>
+                </VBox>
+
+                <GridPane hgap="15.0" maxWidth="560.0" vgap="15.0">
+                    <children>
+                        <Label text="Nombre del Producto:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="txtNombre" promptText="Ej: Leche Entera" style="-fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                        <Label text="Categoría:" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <ComboBox fx:id="cmbCategoria" maxWidth="1.7976931348623157E308" promptText="Seleccione una categoría" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                        <Label text="Precio de compra:" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="txtPrecioCompra" promptText="Ej: 1.50" style="-fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                        <Label text="Precio de venta:" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="txtPrecioVenta" promptText="Ej: 2.00" style="-fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                        <Label text="Stock inicial:" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="txtStock" promptText="Ej: 50" style="-fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                        <Label text="Stock mínimo:" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="txtMinimo" promptText="Ej: 10" style="-fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+                        <Label text="Proveedor asociado:" GridPane.columnIndex="0" GridPane.rowIndex="6">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <ComboBox fx:id="cmbProveedor" maxWidth="1.7976931348623157E308" promptText="Seleccione un proveedor" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                    </children>
+                    <columnConstraints>
+                        <javafx.scene.layout.ColumnConstraints hgrow="NEVER" minWidth="180.0" />
+                        <javafx.scene.layout.ColumnConstraints hgrow="ALWAYS" minWidth="320.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <javafx.scene.layout.RowConstraints />
+                        <javafx.scene.layout.RowConstraints />
+                        <javafx.scene.layout.RowConstraints />
+                        <javafx.scene.layout.RowConstraints />
+                        <javafx.scene.layout.RowConstraints />
+                        <javafx.scene.layout.RowConstraints />
+                        <javafx.scene.layout.RowConstraints />
+                    </rowConstraints>
+                </GridPane>
+
+                <HBox alignment="CENTER" spacing="12.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#clickEnRegistrarProducto" prefWidth="190.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-padding: 12; -fx-background-radius: 5;" text="Guardar Producto">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#clickEnCancelarRegistro" prefWidth="130.0" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 12; -fx-background-radius: 5;" text="Cancelar" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </content>
+</ScrollPane>

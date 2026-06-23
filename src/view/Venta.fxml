@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VentaController">
+    <top>
+        <VBox spacing="14.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                    <children>
+                        <Label text="Punto de Venta">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="lblHora" text="0000-00-00 00:00:00" textFill="#7f8c8d" />
+                    </children>
+                </HBox>
+
+                <GridPane hgap="10.0" vgap="10.0">
+                    <children>
+                        <TextField fx:id="txtBusqueda" promptText="Código o nombre del producto" prefWidth="320.0" style="-fx-padding: 9;" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <Button mnemonicParsing="false" onAction="#buscarProducto" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 9 18;" text="Buscar" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtCantidad" promptText="Cantidad" prefWidth="120.0" style="-fx-padding: 9;" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                        <Button mnemonicParsing="false" onAction="#agregarProducto" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-padding: 9 18;" text="Agregar" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                        <Label fx:id="lblProductoEncontrado" text="Sin producto seleccionado" textFill="#7f8c8d" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="1" />
+                    </children>
+                </GridPane>
+            </children>
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="tablaVenta" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colProducto" prefWidth="320.0" text="Producto" />
+                <TableColumn fx:id="colCantidad" prefWidth="110.0" text="Cantidad" />
+                <TableColumn fx:id="colPrecioUnitario" prefWidth="150.0" text="Precio Unitario" />
+                <TableColumn fx:id="colSubtotalDetalle" prefWidth="150.0" text="Subtotal" />
+            </columns>
+        </TableView>
+    </center>
+
+    <right>
+        <VBox prefWidth="260.0" spacing="14.0" style="-fx-padding: 0 0 0 18;">
+            <children>
+                <Label text="Resumen">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+
+                <GridPane hgap="12.0" vgap="10.0">
+                    <children>
+                        <Label text="Subtotal:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <Label fx:id="lblSubtotal" text="0.00" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="IVA (15%):" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <Label fx:id="lblIva" text="0.00" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="TOTAL:" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                            <font>
+                                <Font name="System Bold" size="15.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="lblTotal" text="0.00" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </GridPane>
+
+                <Label text="Método de pago" />
+                <ComboBox fx:id="cmbMetodoPago" maxWidth="1.7976931348623157E308" />
+
+                <Label text="Pago recibido" />
+                <TextField fx:id="txtPagoRecibido" promptText="Solo efectivo" style="-fx-padding: 8;" />
+
+                <HBox alignment="CENTER_LEFT" spacing="8.0">
+                    <children>
+                        <Label text="Cambio:" />
+                        <Label fx:id="lblCambio" text="0.00">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#finalizarVenta" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-padding: 12;" text="Finalizar Venta">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#eliminarProductoSeleccionado" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-padding: 10;" text="Eliminar Producto Seleccionado" />
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelarVenta" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 10;" text="Cancelar Venta" />
+            </children>
+        </VBox>
+    </right>
+</BorderPane>

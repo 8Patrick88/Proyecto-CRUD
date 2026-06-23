@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane minHeight="600.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
+
+    <left>
+        <VBox prefWidth="230.0" spacing="15.0" style="-fx-background-color: #2c3e50; -fx-padding: 20;">
+            <children>
+                <Label text="Minimarket EDA" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                    <VBox.margin>
+                        <javafx.geometry.Insets bottom="20.0" />
+                    </VBox.margin>
+                </Label>
+
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#mostrarModuloInventario" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 10;" text="📋 Ver Inventario">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#mostrarModuloRegistrar" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 10;" text="➕ Registrar Producto">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#mostrarModuloProveedores" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 10;" text="🏢 Proveedores">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+
+                <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 10;" text="👥 Usuarios">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#mostrarModuloVentas" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-padding: 10;" text="💰 Ventas">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane fx:id="contenedorCentral" style="-fx-background-color: #ecf0f1; -fx-padding: 20;" BorderPane.alignment="CENTER" />
+    </center>
+</BorderPane>
