@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox spacing="15.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InventarioController">
+<VBox fx:id="rootPane" spacing="15.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InventarioController">
     <children>
         <Label text="Inventario">
             <font>
@@ -19,9 +19,8 @@
 
         <HBox alignment="CENTER_LEFT" spacing="10.0">
             <children>
-                <TextField fx:id="txtBuscarId" promptText="Buscar por ID, nombre o categoría..." prefWidth="280.0" style="-fx-padding: 8;" />
-                <Button mnemonicParsing="false" onAction="#accionBuscar" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 8 15;" text="Buscar" />
-                <Button mnemonicParsing="false" onAction="#accionRestaurar" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 8 15;" text="Mostrar Todos" />
+                <TextField fx:id="txtBuscarId" promptText="Buscar por ID, nombre o categoría..." prefWidth="320.0" style="-fx-padding: 10;" />
+                <Button mnemonicParsing="false" onAction="#accionRestaurar" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 10 16;" text="Mostrar Todos" />
             </children>
         </HBox>
 
@@ -33,13 +32,18 @@
                 <TableColumn fx:id="colPrecioVenta" prefWidth="120.0" text="Precio Venta" />
                 <TableColumn fx:id="colStock" prefWidth="110.0" text="Stock Actual" />
                 <TableColumn fx:id="colMinimo" prefWidth="110.0" text="Stock Mínimo" />
-                <TableColumn fx:id="colEstado" prefWidth="140.0" text="Estado de alerta" />
+                <TableColumn fx:id="colEstado" prefWidth="150.0" text="Estado" />
             </columns>
         </TableView>
 
-        <HBox alignment="CENTER_RIGHT">
+        <HBox alignment="CENTER_RIGHT" spacing="10.0">
             <children>
-                <Button mnemonicParsing="false" onAction="#accionEliminar" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-padding: 10 20;" text="Eliminar Seleccionado">
+                <Button fx:id="btnVerDetalles" mnemonicParsing="false" onAction="#verDetalles" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 10 20;" text="Ver Detalles">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#accionEliminar" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-padding: 10 20;" text="Eliminar Seleccionado">
                     <font>
                         <Font name="System Bold" size="13.0" />
                     </font>

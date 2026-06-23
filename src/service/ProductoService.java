@@ -1,16 +1,18 @@
 package service;
 
 import dao.ProductoDAO;
+import datastore.DataStore;
 import tads.CapaEntidadesTADS.Producto;
 import tads.CapaEntidadesTADS.Proveedor;
-import datastore.DataStore;
 
 public class ProductoService {
-    // Le pasamos la ruta del CSV que está en la raíz
     private final ProductoDAO productoDAO = new ProductoDAO("productos.csv");
+    private final CatalogoService catalogoService = new CatalogoService();
+    private final MovimientoInventarioService movimientoService = new MovimientoInventarioService();
 
     public boolean registrarNuevoProducto(Producto nuevo) {
-        cargarProductosSiEsNecesario();
+        catalogoService.cargarProductos();
+        catalogoService.cargarProveedores();
 
         if (nuevo.getIdProducto().isEmpty() || nuevo.getNombre().isEmpty()) {
             return false;
@@ -41,6 +43,14 @@ public class ProductoService {
 
         DataStore.productos.insertar(nuevo);
         productoDAO.guardarProductoEnCSV(nuevo);
+        movimientoService.registrar(
+                MovimientoInventarioService.ALTA_PRODUCTO,
+                nuevo.getIdProducto(),
+                nuevo.getNombre(),
+                0,
+                nuevo.getCantidadStock(),
+                "Registro inicial de producto"
+        );
 
         return true;
     }
@@ -50,8 +60,6 @@ public class ProductoService {
     }
 
     public void cargarProductosSiEsNecesario() {
-        if (DataStore.productos.getCabeza() == null) {
-            productoDAO.cargarProductosDesdeCSV(DataStore.productos);
-        }
+        catalogoService.cargarProductos();
     }
 }

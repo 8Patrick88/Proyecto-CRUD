@@ -1,15 +1,17 @@
 package controller;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -17,21 +19,32 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Popup;
 import javafx.util.Duration;
+import service.CatalogoService;
 import service.VentaService;
 import tads.CapaEntidadesTADS.DetalleVenta;
 import tads.CapaEntidadesTADS.Producto;
 import tads.CapaEntidadesTADS.Venta;
+import util.AlertUtil;
+import util.DebounceUtil;
+import util.FormatUtil;
+import util.KeyboardUtil;
+import util.StockUtil;
 
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class VentaController implements Initializable {
+    @FXML private BorderPane rootPane;
     @FXML private Label lblHora;
     @FXML private TextField txtBusqueda;
     @FXML private TextField txtCantidad;
@@ -49,20 +62,30 @@ public class VentaController implements Initializable {
     @FXML private Label lblCambio;
 
     private final VentaService ventaService = new VentaService();
+    private final CatalogoService catalogoService = new CatalogoService();
     private final ObservableList<DetalleVenta> detalles = FXCollections.observableArrayList();
-    private final DecimalFormat dinero = new DecimalFormat("$0.00");
+    private final ObservableList<Producto> sugerencias = FXCollections.observableArrayList();
+    private final Map<String, DetalleVenta> indiceDetalles = new HashMap<>();
+    private final Map<String, Producto> catalogoCache = new HashMap<>();
+    private final Popup popupSugerencias = new Popup();
+    private final ListView<Producto> listaSugerencias = new ListView<>();
+    private final PauseTransition debounceBusqueda = DebounceUtil.crear(this::ejecutarBusqueda, 120);
+
     private Producto productoSeleccionado;
+    private double totalActual;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ventaService.cargarProductosSiEsNecesario();
+        catalogoService.inicializarSistema();
+        refrescarCatalogoCache();
 
         colProducto.setCellValueFactory(new PropertyValueFactory<>("nombreProducto"));
         colCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
         colPrecioUnitario.setCellValueFactory(new PropertyValueFactory<>("precioUnitario"));
         colSubtotalDetalle.setCellValueFactory(new PropertyValueFactory<>("subtotal"));
         tablaVenta.setItems(detalles);
-        tablaVenta.setRowFactory(tv -> new TableRow<DetalleVenta>() {
+        tablaVenta.setFixedCellSize(32);
+        tablaVenta.setRowFactory(tv -> new TableRow<>() {
             @Override
             protected void updateItem(DetalleVenta detalle, boolean empty) {
                 super.updateItem(detalle, empty);
@@ -70,26 +93,149 @@ public class VentaController implements Initializable {
                     setStyle("");
                     return;
                 }
-                Producto producto = ventaService.buscarProducto(detalle.getIdProducto());
-                setStyle(producto != null && producto.isEstadoAlertado() ? "-fx-background-color: #fdecea;" : "");
+                Producto producto = catalogoCache.get(detalle.getIdProducto());
+                setStyle(producto != null ? StockUtil.estiloFila(producto) : "");
             }
         });
 
         cmbMetodoPago.setItems(FXCollections.observableArrayList("EFECTIVO", "TRANSFERENCIA"));
         cmbMetodoPago.getSelectionModel().select("EFECTIVO");
 
-        txtBusqueda.setOnAction(event -> buscarProducto());
+        configurarAutocompletado();
+        configurarTecladoBusqueda();
+        txtCantidad.setText("1");
+
         txtCantidad.setOnAction(event -> agregarProducto());
         txtPagoRecibido.textProperty().addListener((obs, anterior, actual) -> actualizarCambio());
         cmbMetodoPago.valueProperty().addListener((obs, anterior, actual) -> actualizarCambio());
-        tablaVenta.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.DELETE) {
-                eliminarProductoSeleccionado();
-            }
-        });
+
+        KeyboardUtil.configurarAtajos(rootPane,
+                this::manejarEnter,
+                this::cancelarVenta,
+                this::eliminarProductoSeleccionado);
 
         iniciarReloj();
         iniciarNuevaVenta();
+    }
+
+    private void refrescarCatalogoCache() {
+        catalogoCache.clear();
+        catalogoCache.putAll(catalogoService.mapaProductos());
+    }
+
+    private void configurarAutocompletado() {
+        listaSugerencias.setItems(sugerencias);
+        listaSugerencias.setPrefWidth(520);
+        listaSugerencias.setPrefHeight(160);
+        listaSugerencias.setFixedCellSize(28);
+        listaSugerencias.setCellFactory(lv -> new javafx.scene.control.ListCell<>() {
+            @Override
+            protected void updateItem(Producto producto, boolean empty) {
+                super.updateItem(producto, empty);
+                if (empty || producto == null) {
+                    setText(null);
+                } else {
+                    setText(producto.getIdProducto() + " - " + producto.getNombre()
+                            + " | Stock: " + producto.getCantidadStock()
+                            + " | " + FormatUtil.dinero(producto.getPrecioVenta()));
+                }
+            }
+        });
+        popupSugerencias.getContent().add(listaSugerencias);
+
+        txtBusqueda.textProperty().addListener((obs, anterior, actual) -> debounceBusqueda.playFromStart());
+
+        listaSugerencias.setOnMouseClicked(event -> {
+            Producto seleccionado = listaSugerencias.getSelectionModel().getSelectedItem();
+            if (seleccionado != null) {
+                seleccionarProducto(seleccionado);
+            }
+        });
+
+        txtBusqueda.focusedProperty().addListener((obs, anterior, enfocado) -> {
+            if (!enfocado) {
+                popupSugerencias.hide();
+            }
+        });
+    }
+
+    private void configurarTecladoBusqueda() {
+        txtBusqueda.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (!popupSugerencias.isShowing() || sugerencias.isEmpty()) {
+                return;
+            }
+
+            int indice = listaSugerencias.getSelectionModel().getSelectedIndex();
+            if (event.getCode() == KeyCode.DOWN) {
+                listaSugerencias.getSelectionModel().select(Math.min(indice + 1, sugerencias.size() - 1));
+                event.consume();
+            } else if (event.getCode() == KeyCode.UP) {
+                listaSugerencias.getSelectionModel().select(Math.max(indice - 1, 0));
+                event.consume();
+            } else if (event.getCode() == KeyCode.ENTER) {
+                Producto seleccionado = listaSugerencias.getSelectionModel().getSelectedItem();
+                if (seleccionado == null && !sugerencias.isEmpty()) {
+                    seleccionado = sugerencias.get(0);
+                }
+                seleccionarProducto(seleccionado);
+                event.consume();
+            } else if (event.getCode() == KeyCode.ESCAPE) {
+                popupSugerencias.hide();
+                event.consume();
+            }
+        });
+    }
+
+    private void ejecutarBusqueda() {
+        String texto = txtBusqueda.getText();
+        List<Producto> resultados = ventaService.buscarProductos(texto);
+        sugerencias.setAll(resultados);
+
+        if (!texto.trim().isEmpty() && !resultados.isEmpty()) {
+            listaSugerencias.getSelectionModel().select(0);
+            mostrarSugerencias();
+        } else {
+            popupSugerencias.hide();
+            if (texto.trim().isEmpty()) {
+                productoSeleccionado = null;
+                lblProductoEncontrado.setText("Sin producto seleccionado");
+                lblProductoEncontrado.setStyle("-fx-text-fill: #7f8c8d;");
+            }
+        }
+    }
+
+    private void manejarEnter() {
+        if (txtBusqueda.isFocused()) {
+            if (popupSugerencias.isShowing() && !sugerencias.isEmpty()) {
+                Producto seleccionado = listaSugerencias.getSelectionModel().getSelectedItem();
+                seleccionarProducto(seleccionado != null ? seleccionado : sugerencias.get(0));
+            } else {
+                buscarProducto();
+            }
+        } else if (txtCantidad.isFocused()) {
+            agregarProducto();
+        } else {
+            finalizarVenta();
+        }
+    }
+
+    private void mostrarSugerencias() {
+        Bounds bounds = txtBusqueda.localToScreen(txtBusqueda.getBoundsInLocal());
+        if (bounds != null) {
+            popupSugerencias.show(txtBusqueda, bounds.getMinX(), bounds.getMaxY());
+        }
+    }
+
+    private void seleccionarProducto(Producto producto) {
+        if (producto == null) {
+            return;
+        }
+        productoSeleccionado = producto;
+        txtBusqueda.setText(producto.getIdProducto() + " - " + producto.getNombre());
+        popupSugerencias.hide();
+        mostrarProductoSeleccionado();
+        txtCantidad.requestFocus();
+        txtCantidad.selectAll();
     }
 
     @FXML
@@ -100,12 +246,38 @@ public class VentaController implements Initializable {
             lblProductoEncontrado.setStyle("-fx-text-fill: #c0392b;");
             return;
         }
+        mostrarProductoSeleccionado();
+        txtCantidad.requestFocus();
+    }
 
+    private void mostrarProductoSeleccionado() {
+        StockUtil.NivelStock nivel = StockUtil.calcularNivel(productoSeleccionado);
         lblProductoEncontrado.setText(productoSeleccionado.getIdProducto() + " - " + productoSeleccionado.getNombre()
                 + " | Stock: " + productoSeleccionado.getCantidadStock()
-                + " | Precio: " + dinero.format(productoSeleccionado.getPrecioVenta()));
-        lblProductoEncontrado.setStyle(productoSeleccionado.isEstadoAlertado() ? "-fx-text-fill: #c0392b;" : "-fx-text-fill: #2c3e50;");
-        txtCantidad.requestFocus();
+                + " | Precio: " + FormatUtil.dinero(productoSeleccionado.getPrecioVenta())
+                + " | " + nivel.getEtiqueta());
+        lblProductoEncontrado.setStyle("-fx-text-fill: " + nivel.getColorTexto() + "; -fx-font-weight: bold;");
+    }
+
+    @FXML
+    private void incrementarCantidad() {
+        txtCantidad.setText(String.valueOf(obtenerCantidadActual() + 1));
+    }
+
+    @FXML
+    private void decrementarCantidad() {
+        int cantidad = obtenerCantidadActual();
+        if (cantidad > 1) {
+            txtCantidad.setText(String.valueOf(cantidad - 1));
+        }
+    }
+
+    private int obtenerCantidadActual() {
+        try {
+            return Math.max(1, Integer.parseInt(txtCantidad.getText().trim()));
+        } catch (NumberFormatException e) {
+            return 1;
+        }
     }
 
     @FXML
@@ -114,7 +286,7 @@ public class VentaController implements Initializable {
             buscarProducto();
         }
         if (productoSeleccionado == null) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Producto inválido", "No existe un producto con ese código o nombre.");
+            AlertUtil.mostrarAdvertencia("Producto inválido", "No existe un producto con ese código o nombre.");
             return;
         }
 
@@ -122,19 +294,19 @@ public class VentaController implements Initializable {
         try {
             cantidad = Integer.parseInt(txtCantidad.getText().trim());
         } catch (NumberFormatException e) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Cantidad inválida", "La cantidad debe ser un número entero.");
+            AlertUtil.mostrarAdvertencia("Cantidad inválida", "La cantidad debe ser un número entero.");
             return;
         }
 
         if (cantidad <= 0) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Cantidad inválida", "La cantidad debe ser mayor que cero.");
+            AlertUtil.mostrarAdvertencia("Cantidad inválida", "La cantidad debe ser mayor que cero.");
             return;
         }
 
-        DetalleVenta existente = buscarDetalle(productoSeleccionado.getIdProducto());
+        DetalleVenta existente = indiceDetalles.get(productoSeleccionado.getIdProducto());
         int cantidadActualEnVenta = existente == null ? 0 : existente.getCantidad();
         if (cantidadActualEnVenta + cantidad > productoSeleccionado.getCantidadStock()) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Stock insuficiente", "Stock insuficiente para completar la venta.");
+            AlertUtil.mostrarError("Stock insuficiente", "Stock insuficiente para completar la venta.");
             return;
         }
 
@@ -142,12 +314,14 @@ public class VentaController implements Initializable {
             existente.aumentarCantidad(cantidad);
             tablaVenta.refresh();
         } else {
-            detalles.add(new DetalleVenta(
+            DetalleVenta nuevo = new DetalleVenta(
                     productoSeleccionado.getIdProducto(),
                     productoSeleccionado.getNombre(),
                     cantidad,
                     productoSeleccionado.getPrecioVenta()
-            ));
+            );
+            detalles.add(nuevo);
+            indiceDetalles.put(nuevo.getIdProducto(), nuevo);
         }
 
         FXCollections.sort(detalles, Comparator.comparing(DetalleVenta::getNombreProducto));
@@ -158,36 +332,32 @@ public class VentaController implements Initializable {
     @FXML
     private void finalizarVenta() {
         if (detalles.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Venta vacía", "No se puede finalizar una venta sin productos.");
+            AlertUtil.mostrarAdvertencia("Venta vacía", "No se puede finalizar una venta sin productos.");
             return;
         }
 
         String metodoPago = cmbMetodoPago.getValue();
         if (metodoPago == null || metodoPago.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Método de pago", "Seleccione un método de pago.");
+            AlertUtil.mostrarAdvertencia("Método de pago", "Seleccione un método de pago.");
             return;
         }
 
         if ("EFECTIVO".equals(metodoPago)) {
             Double pagoRecibido = obtenerPagoRecibido();
-            if (pagoRecibido == null || pagoRecibido < ventaService.calcularTotal(detalles)) {
-                mostrarAlerta(Alert.AlertType.WARNING, "Pago insuficiente", "El pago recibido debe cubrir el total de la venta.");
+            if (pagoRecibido == null || pagoRecibido < totalActual) {
+                AlertUtil.mostrarAdvertencia("Pago insuficiente", "El pago recibido debe cubrir el total de la venta.");
                 return;
             }
         }
 
-        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmacion.setTitle("Finalizar venta");
-        confirmacion.setHeaderText("¿Desea confirmar la venta?");
-        confirmacion.setContentText("Se descontará el stock y se guardará la factura.");
-        Optional<ButtonType> resultado = confirmacion.showAndWait();
-        if (resultado.isEmpty() || resultado.get() != ButtonType.OK) {
+        if (!AlertUtil.confirmar("Finalizar venta", "¿Desea confirmar la venta?",
+                "Se descontará el stock y se guardará la factura.")) {
             return;
         }
 
         Venta venta = ventaService.finalizarVenta(detalles, metodoPago);
-        String factura = generarFactura(venta);
-        mostrarFactura(factura);
+        refrescarCatalogoCache();
+        mostrarFactura(generarFactura(venta));
         iniciarNuevaVenta();
     }
 
@@ -198,12 +368,8 @@ public class VentaController implements Initializable {
             return;
         }
 
-        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmacion.setTitle("Cancelar venta");
-        confirmacion.setHeaderText("¿Desea cancelar la venta actual?");
-        confirmacion.setContentText("Los productos agregados se eliminarán de la venta en pantalla.");
-        Optional<ButtonType> resultado = confirmacion.showAndWait();
-        if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+        if (AlertUtil.confirmar("Cancelar venta", "¿Desea cancelar la venta actual?",
+                "Los productos agregados se eliminarán de la venta en pantalla.")) {
             iniciarNuevaVenta();
         }
     }
@@ -213,23 +379,17 @@ public class VentaController implements Initializable {
         DetalleVenta seleccionado = tablaVenta.getSelectionModel().getSelectedItem();
         if (seleccionado != null) {
             detalles.remove(seleccionado);
+            indiceDetalles.remove(seleccionado.getIdProducto());
             actualizarResumen();
         }
     }
 
-    private DetalleVenta buscarDetalle(String idProducto) {
-        for (DetalleVenta detalle : detalles) {
-            if (detalle.getIdProducto().equals(idProducto)) {
-                return detalle;
-            }
-        }
-        return null;
-    }
-
     private void actualizarResumen() {
-        lblSubtotal.setText(dinero.format(ventaService.calcularSubtotal(detalles)));
-        lblIva.setText(dinero.format(ventaService.calcularIva(detalles)));
-        lblTotal.setText(dinero.format(ventaService.calcularTotal(detalles)));
+        double[] totales = ventaService.calcularTotales(detalles);
+        lblSubtotal.setText(FormatUtil.dinero(totales[0]));
+        lblIva.setText(FormatUtil.dinero(totales[1]));
+        lblTotal.setText(FormatUtil.dinero(totales[2]));
+        totalActual = totales[2];
         actualizarCambio();
     }
 
@@ -248,8 +408,7 @@ public class VentaController implements Initializable {
             return;
         }
 
-        double cambio = Math.max(0.0, pagoRecibido - ventaService.calcularTotal(detalles));
-        lblCambio.setText(dinero.format(cambio));
+        lblCambio.setText(FormatUtil.dinero(Math.max(0.0, pagoRecibido - totalActual)));
     }
 
     private Double obtenerPagoRecibido() {
@@ -265,27 +424,30 @@ public class VentaController implements Initializable {
     }
 
     private String generarFactura(Venta venta) {
-        StringBuilder factura = new StringBuilder();
-        factura.append("FACTURA ").append(venta.getIdVenta()).append("\n");
-        factura.append("Fecha: ").append(venta.getFechaHora()).append("\n\n");
+        StringBuilder factura = new StringBuilder(256);
+        factura.append("FACTURA ").append(venta.getIdVenta()).append('\n');
+        factura.append("Fecha: ").append(venta.getFecha()).append('\n');
+        factura.append("Hora: ").append(venta.getHora()).append('\n');
+        factura.append("Usuario: ").append(venta.getIdUsuario()).append("\n\n");
 
         for (DetalleVenta detalle : detalles) {
             factura.append(detalle.getNombreProducto())
                     .append(" x").append(detalle.getCantidad())
-                    .append(" -> ").append(dinero.format(detalle.getSubtotal()))
-                    .append("\n");
+                    .append(" @ ").append(FormatUtil.dinero(detalle.getPrecioUnitario()))
+                    .append(" -> ").append(FormatUtil.dinero(detalle.getSubtotal()))
+                    .append('\n');
         }
 
-        factura.append("\nSubtotal: ").append(dinero.format(venta.getSubtotal())).append("\n");
-        factura.append("IVA (15%): ").append(dinero.format(venta.getIva())).append("\n");
-        factura.append("TOTAL: ").append(dinero.format(venta.getTotal())).append("\n");
-        factura.append("Pago: ").append(venta.getMetodoPago()).append("\n");
+        factura.append("\nSubtotal: ").append(FormatUtil.dinero(venta.getSubtotal())).append('\n');
+        factura.append("IVA (15%): ").append(FormatUtil.dinero(venta.getIva())).append('\n');
+        factura.append("TOTAL: ").append(FormatUtil.dinero(venta.getTotal())).append('\n');
+        factura.append("Pago: ").append(venta.getMetodoPago()).append('\n');
 
         if ("EFECTIVO".equals(venta.getMetodoPago())) {
             Double pagoRecibido = obtenerPagoRecibido();
             if (pagoRecibido != null) {
-                factura.append("Recibido: ").append(dinero.format(pagoRecibido)).append("\n");
-                factura.append("Cambio: ").append(dinero.format(Math.max(0.0, pagoRecibido - venta.getTotal()))).append("\n");
+                factura.append("Recibido: ").append(FormatUtil.dinero(pagoRecibido)).append('\n');
+                factura.append("Cambio: ").append(FormatUtil.dinero(Math.max(0.0, pagoRecibido - venta.getTotal()))).append('\n');
             }
         }
 
@@ -308,39 +470,33 @@ public class VentaController implements Initializable {
 
     private void iniciarNuevaVenta() {
         detalles.clear();
+        indiceDetalles.clear();
         limpiarEntradaProducto();
         cmbMetodoPago.getSelectionModel().select("EFECTIVO");
         txtPagoRecibido.clear();
+        txtCantidad.setText("1");
         actualizarResumen();
         txtBusqueda.requestFocus();
     }
 
     private void limpiarEntradaProducto() {
         txtBusqueda.clear();
-        txtCantidad.clear();
+        txtCantidad.setText("1");
         lblProductoEncontrado.setText("Sin producto seleccionado");
         lblProductoEncontrado.setStyle("-fx-text-fill: #7f8c8d;");
         productoSeleccionado = null;
+        popupSugerencias.hide();
         txtBusqueda.requestFocus();
     }
 
     private boolean formularioEntradaVacio() {
-        return txtBusqueda.getText().trim().isEmpty() && txtCantidad.getText().trim().isEmpty();
+        return txtBusqueda.getText().trim().isEmpty();
     }
 
     private void iniciarReloj() {
-        Timeline reloj = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            lblHora.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        }));
+        Timeline reloj = new Timeline(new KeyFrame(Duration.seconds(1),
+                event -> lblHora.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))));
         reloj.setCycleCount(Timeline.INDEFINITE);
         reloj.play();
-    }
-
-    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
-        Alert alerta = new Alert(tipo);
-        alerta.setTitle(titulo);
-        alerta.setHeaderText(null);
-        alerta.setContentText(mensaje);
-        alerta.showAndWait();
     }
 }

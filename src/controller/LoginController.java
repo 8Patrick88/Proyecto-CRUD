@@ -8,21 +8,28 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.Usuario;
+import service.AuthService;
+import service.SesionUsuario;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
+    @FXML private VBox rootPane;
     @FXML private TextField txtUsuario;
     @FXML private PasswordField txtPassword;
     @FXML private Label lblError;
+    private final AuthService authService = new AuthService();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Asegurarnos de que el mensaje de error inicie oculto
         lblError.setVisible(false);
+        txtPassword.setOnAction(event -> accionIngresar());
+        util.KeyboardUtil.configurarAtajos(rootPane, this::accionIngresar, null, null);
     }
 
     /**
@@ -35,32 +42,46 @@ public class LoginController implements Initializable {
         String usuarioInput = txtUsuario.getText().trim();
         String passwordInput = txtPassword.getText().trim();
 
-        // Validación simple para la defensa de hoy
-        if (usuarioInput.equals("admin") && passwordInput.equals("1234")) {
-            try {
-                // 1. Cargar la vista del Dashboard
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Dashboard.fxml"));
-                Parent root = loader.load();
-
-                // 2. Crear la nueva ventana (Stage) para el Dashboard
-                Stage dashboardStage = new Stage();
-                dashboardStage.setTitle("Sistema Minimarket - Panel de Control");
-                dashboardStage.setScene(new Scene(root, 840, 600));
-
-                // 3. Obtener la ventana actual (Login) a través de cualquier componente y cerrarla
-                Stage loginStage = (Stage) txtUsuario.getScene().getWindow();
-                loginStage.close();
-
-                // 4. Mostrar el Dashboard
-                dashboardStage.show();
-
-            } catch (Exception e) {
-                System.err.println("❌ Error al cambiar a la pantalla de Dashboard:");
-                e.printStackTrace();
-            }
-        } else {
-            // Mostrar mensaje de error visual si se equivocan
-            lblError.setVisible(true);
+        if (usuarioInput.isEmpty()) {
+            mostrarError("Ingrese el usuario.");
+            return;
         }
+        if (passwordInput.isEmpty()) {
+            mostrarError("Ingrese la contraseña.");
+            return;
+        }
+
+        Usuario usuarioAutenticado = authService.autenticar(usuarioInput, passwordInput);
+        if (usuarioAutenticado != null) {
+            abrirDashboard(usuarioAutenticado);
+        } else {
+            mostrarError("Usuario, contraseña o estado inválido.");
+        }
+    }
+
+    private void abrirDashboard(Usuario usuarioAutenticado) {
+        try {
+            SesionUsuario.setUsuarioActual(usuarioAutenticado);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Dashboard.fxml"));
+            Parent root = loader.load();
+
+            Stage dashboardStage = new Stage();
+            dashboardStage.setTitle("Sistema Minimarket - " + usuarioAutenticado.getRol());
+            dashboardStage.setScene(new Scene(root, 1200, 700));
+
+            Stage loginStage = (Stage) txtUsuario.getScene().getWindow();
+            loginStage.close();
+
+            dashboardStage.show();
+        } catch (Exception e) {
+            System.err.println("Error al cambiar a la pantalla de Dashboard:");
+            e.printStackTrace();
+        }
+    }
+
+    private void mostrarError(String mensaje) {
+        lblError.setText(mensaje);
+        lblError.setVisible(true);
     }
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="rootPane" spacing="15.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HistorialVentasController">
+    <children>
+        <Label text="Registro de Ventas">
+            <font>
+                <Font name="System Bold" size="22.0" />
+            </font>
+        </Label>
+
+        <HBox alignment="CENTER_LEFT" spacing="10.0">
+            <children>
+                <TextField fx:id="txtBuscar" promptText="Buscar por factura, usuario o método de pago..." prefWidth="320.0" style="-fx-padding: 10;" />
+                <DatePicker fx:id="dpFecha" promptText="Filtrar por fecha" />
+                <Button mnemonicParsing="false" onAction="#limpiarFiltros" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 10 16;" text="Limpiar" />
+            </children>
+        </HBox>
+
+        <TableView fx:id="tablaVentas" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colFactura" prefWidth="100.0" text="Factura" />
+                <TableColumn fx:id="colFecha" prefWidth="120.0" text="Fecha" />
+                <TableColumn fx:id="colHora" prefWidth="90.0" text="Hora" />
+                <TableColumn fx:id="colUsuario" prefWidth="160.0" text="Usuario" />
+                <TableColumn fx:id="colSubtotal" prefWidth="110.0" text="Subtotal" />
+                <TableColumn fx:id="colIva" prefWidth="90.0" text="IVA" />
+                <TableColumn fx:id="colTotal" prefWidth="110.0" text="Total" />
+                <TableColumn fx:id="colMetodoPago" prefWidth="130.0" text="Método de pago" />
+            </columns>
+        </TableView>
+
+        <HBox alignment="CENTER_RIGHT">
+            <children>
+                <Button mnemonicParsing="false" onAction="#verDetalleFactura" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 10 20;" text="Ver Detalle de Factura">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Button>
+            </children>
+        </HBox>
+    </children>
+</VBox>

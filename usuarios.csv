@@ -1,0 +1,4 @@
+idUsuario,nombre,usuario,contrasena,rol,estado
+U001,Administrador,admin,admin123,ADMIN,ACTIVO
+U002,Carlos Perez,carlos,1234,EMPLEADO,ACTIVO
+U003,Laura Diaz,laura,1234,EMPLEADO,ACTIVO

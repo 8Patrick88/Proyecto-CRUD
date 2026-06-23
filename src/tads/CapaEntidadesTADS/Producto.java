@@ -55,7 +55,7 @@ public class Producto {
     public String getIdProveedorAsociado() { return idProveedorAsociado; }
     public void setIdProveedorAsociado(String idProveedorAsociado) { this.idProveedorAsociado = idProveedorAsociado; }
 
-    public String getEstado() { return isEstadoAlertado() ? "BAJO STOCK" : "NORMAL"; }
+    public String getEstado() { return util.StockUtil.calcularNivel(this).getEtiqueta(); }
     public void setEstado(String estado) { }
 
     public boolean isEstadoAlertado() { return cantidadStock <= stockMinimo; }

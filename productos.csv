@@ -1,38 +1,38 @@
 idProducto,nombre,categoria,precioCompra,precioVenta,cantidadStock,stockMinimo,idProveedorAsociado
-PROD-0001,Teclado Mecánico V3,Electrónica,40.51,50.31,26,27,PROV-102
+PROD-0001,Teclado Mecánico V3,Electrónica,40.51,50.31,24,27,PROV-102
 PROD-0002,Cerveza Artesanal V1,Bebidas,0.72,0.86,129,29,PROV-101
-PROD-0003,Gaseosa Cola 2L V5,Bebidas,3.65,4.53,71,10,PROV-103
-PROD-0004,Fideos Espagueti V3,Abarrotes,1.67,2.24,86,13,PROV-102
-PROD-0005,Arroz Extra 1kg V3,Abarrotes,6.86,8.72,11,24,PROV-109
+PROD-0003,Gaseosa Cola 2L V5,Bebidas,3.65,4.53,0,10,PROV-103
+PROD-0004,Fideos Espagueti V3,Abarrotes,1.67,2.24,82,13,PROV-102
+PROD-0005,Arroz Extra 1kg V3,Abarrotes,6.86,8.72,10,24,PROV-109
 PROD-0006,Cable HDMI V1,Electrónica,85.05,123.22,92,28,PROV-104
 PROD-0007,Teclado Mecánico V2,Electrónica,117.09,175.12,59,13,PROV-107
-PROD-0008,Cloro Blanqueador V3,Limpieza,1.72,2.1,68,30,PROV-102
+PROD-0008,Cloro Blanqueador V3,Limpieza,1.72,2.10,68,30,PROV-102
 PROD-0009,Gaseosa Cola 2L V5,Bebidas,5.97,7.06,97,18,PROV-109
 PROD-0010,Yogurt de Fresa V1,Lácteos,2.22,2.57,80,22,PROV-105
 PROD-0011,Audífonos Bluetooth V5,Electrónica,132.07,170.95,127,22,PROV-108
-PROD-0012,Yogurt de Fresa V2,Lácteos,2.35,2.97,67,28,PROV-107
+PROD-0012,Yogurt de Fresa V2,Lácteos,2.35,2.97,61,28,PROV-107
 PROD-0013,Cerveza Artesanal V3,Bebidas,2.14,2.89,130,25,PROV-102
 PROD-0014,Mouse Óptico V2,Electrónica,95.98,137.98,108,29,PROV-102
 PROD-0015,Azúcar Blanca 1kg V5,Abarrotes,7.97,10.01,141,10,PROV-102
 PROD-0016,Jugo de Naranja 1L V3,Bebidas,1.34,1.66,116,10,PROV-105
 PROD-0017,Gaseosa Cola 2L V5,Bebidas,7.34,9.72,76,30,PROV-109
-PROD-0018,Gaseosa Cola 2L V2,Bebidas,3.3,3.9,135,10,PROV-110
+PROD-0018,Gaseosa Cola 2L V2,Bebidas,3.30,3.90,135,10,PROV-110
 PROD-0019,Cloro Blanqueador V1,Limpieza,1.34,1.64,78,17,PROV-101
-PROD-0020,Crema de Leche V1,Lácteos,1.14,1.42,17,27,PROV-103
-PROD-0021,Mantequilla con sal V5,Lácteos,1.74,2.18,108,16,PROV-109
+PROD-0020,Crema de Leche V1,Lácteos,1.14,1.42,7,27,PROV-103
+PROD-0021,Mantequilla con sal V5,Lácteos,1.74,2.18,58,16,PROV-109
 PROD-0022,Yogurt de Fresa V4,Lácteos,7.96,10.19,112,26,PROV-108
 PROD-0023,Audífonos Bluetooth V2,Electrónica,14.28,17.23,141,17,PROV-110
 PROD-0024,Leche Entera 1L V1,Lácteos,5.81,6.75,17,11,PROV-106
-PROD-0025,Audífonos Bluetooth V3,Electrónica,102.0,128.96,33,28,PROV-110
+PROD-0025,Audífonos Bluetooth V3,Electrónica,102.00,128.96,33,28,PROV-110
 PROD-0026,Aceite de Girasol 1L V4,Abarrotes,6.56,7.79,24,23,PROV-106
-PROD-0027,Azúcar Blanca 1kg V4,Abarrotes,6.98,8.1,25,11,PROV-107
+PROD-0027,Azúcar Blanca 1kg V4,Abarrotes,6.98,8.10,25,11,PROV-107
 PROD-0028,Detergente Líquido V2,Limpieza,1.94,2.44,35,23,PROV-103
 PROD-0029,Cloro Blanqueador V2,Limpieza,7.06,8.23,140,13,PROV-101
-PROD-0030,Agua Mineral 500ml V1,Bebidas,7.45,9.83,42,23,PROV-108
-PROD-0031,Aceite de Girasol 1L V4,Abarrotes,7.27,8.6,0,22,PROV-105
+PROD-0030,Agua Mineral 500ml V1,Bebidas,7.45,9.83,40,23,PROV-108
+PROD-0031,Aceite de Girasol 1L V4,Abarrotes,7.27,8.60,0,22,PROV-105
 PROD-0032,Fideos Espagueti V4,Abarrotes,5.72,7.41,142,25,PROV-103
 PROD-0033,Yogurt de Fresa V2,Lácteos,7.77,9.84,138,11,PROV-106
-PROD-0034,Teclado Mecánico V5,Electrónica,74.13,109.4,135,15,PROV-101
+PROD-0034,Teclado Mecánico V5,Electrónica,74.13,109.40,135,15,PROV-101
 PROD-0035,Agua Mineral 500ml V2,Bebidas,1.01,1.18,60,22,PROV-102
 PROD-0036,Gaseosa Cola 2L V5,Bebidas,4.96,6.32,107,28,PROV-110
 PROD-0037,Jugo de Naranja 1L V3,Bebidas,2.03,2.63,61,18,PROV-107
@@ -42,14 +42,14 @@ PROD-0040,Audífonos Bluetooth V3,Electrónica,46.32,61.67,139,19,PROV-110
 PROD-0041,Agua Mineral 500ml V5,Bebidas,2.75,3.53,34,18,PROV-102
 PROD-0042,Monitor 24 pulgadas V3,Electrónica,45.85,57.92,87,16,PROV-105
 PROD-0043,Cerveza Artesanal V3,Bebidas,7.29,9.62,23,30,PROV-107
-PROD-0044,Detergente Líquido V1,Limpieza,3.0,3.53,67,15,PROV-108
+PROD-0044,Detergente Líquido V1,Limpieza,3.00,3.53,67,15,PROV-108
 PROD-0045,Cerveza Artesanal V5,Bebidas,0.57,0.66,38,27,PROV-101
 PROD-0046,Jabón de Manos V5,Limpieza,1.61,1.89,78,21,PROV-101
-PROD-0047,Desinfectante de Pisos V2,Limpieza,5.5,6.71,143,23,PROV-110
+PROD-0047,Desinfectante de Pisos V2,Limpieza,5.50,6.71,143,23,PROV-110
 PROD-0048,Queso Mozzarella V2,Lácteos,7.82,10.26,105,10,PROV-103
-PROD-0049,Cloro Blanqueador V2,Limpieza,2.5,3.27,27,22,PROV-101
+PROD-0049,Cloro Blanqueador V2,Limpieza,2.50,3.27,27,22,PROV-101
 PROD-0050,Aceite de Girasol 1L V2,Abarrotes,6.62,8.22,78,17,PROV-104
-PROD-0051,Audífonos Bluetooth V4,Electrónica,52.6,76.76,71,21,PROV-109
+PROD-0051,Audífonos Bluetooth V4,Electrónica,52.60,76.76,71,21,PROV-109
 PROD-0052,Atún en Conserva V5,Abarrotes,2.98,3.44,66,15,PROV-110
 PROD-0053,Detergente Líquido V1,Limpieza,4.97,6.06,80,23,PROV-110
 PROD-0054,Agua Mineral 500ml V4,Bebidas,7.25,8.61,11,23,PROV-101
@@ -57,7 +57,7 @@ PROD-0055,Energizante V2,Bebidas,3.23,3.76,84,29,PROV-106
 PROD-0056,Memoria RAM 16GB V5,Electrónica,49.85,65.93,103,19,PROV-109
 PROD-0057,Queso Mozzarella V4,Lácteos,5.49,6.73,44,29,PROV-110
 PROD-0058,Cloro Blanqueador V5,Limpieza,6.75,8.17,53,23,PROV-110
-PROD-0059,Jugo de Naranja 1L V4,Bebidas,3.81,4.9,130,25,PROV-103
+PROD-0059,Jugo de Naranja 1L V4,Bebidas,3.81,4.90,130,25,PROV-103
 PROD-0060,Memoria RAM 16GB V5,Electrónica,101.26,140.32,23,17,PROV-105
 PROD-0061,Queso Mozzarella V2,Lácteos,0.68,0.82,121,29,PROV-102
 PROD-0062,Azúcar Blanca 1kg V5,Abarrotes,1.96,2.53,126,22,PROV-104
@@ -65,17 +65,17 @@ PROD-0063,Leche Entera 1L V1,Lácteos,6.34,7.57,132,24,PROV-101
 PROD-0064,Gaseosa Cola 2L V1,Bebidas,3.92,5.14,135,27,PROV-110
 PROD-0065,Cloro Blanqueador V5,Limpieza,6.61,8.78,109,27,PROV-108
 PROD-0066,Mantequilla con sal V4,Lácteos,2.44,2.93,70,26,PROV-108
-PROD-0067,Yogurt de Fresa V4,Lácteos,1.08,1.3,69,20,PROV-106
-PROD-0068,Agua Mineral 500ml V2,Bebidas,1.63,2.0,39,16,PROV-102
+PROD-0067,Yogurt de Fresa V4,Lácteos,1.08,1.30,69,20,PROV-106
+PROD-0068,Agua Mineral 500ml V2,Bebidas,1.63,2.00,39,16,PROV-102
 PROD-0069,Azúcar Blanca 1kg V3,Abarrotes,4.57,5.64,52,23,PROV-107
 PROD-0070,Agua Mineral 500ml V5,Bebidas,3.35,3.86,90,19,PROV-107
-PROD-0071,Sal Yodada V5,Abarrotes,6.5,8.64,124,17,PROV-105
+PROD-0071,Sal Yodada V5,Abarrotes,6.50,8.64,124,17,PROV-105
 PROD-0072,Azúcar Blanca 1kg V1,Abarrotes,3.42,4.39,103,15,PROV-108
-PROD-0073,Crema de Leche V5,Lácteos,0.7,0.86,144,10,PROV-102
+PROD-0073,Crema de Leche V5,Lácteos,0.70,0.86,144,10,PROV-102
 PROD-0074,Aceite de Girasol 1L V4,Abarrotes,1.86,2.24,83,16,PROV-108
 PROD-0075,Esponja de Platos V4,Limpieza,2.59,3.47,107,18,PROV-102
 PROD-0076,Arroz Extra 1kg V5,Abarrotes,0.89,1.19,57,30,PROV-102
-PROD-0077,Teclado Mecánico V2,Electrónica,33.91,40.9,39,17,PROV-103
+PROD-0077,Teclado Mecánico V2,Electrónica,33.91,40.90,39,17,PROV-103
 PROD-0078,Atún en Conserva V1,Abarrotes,4.73,5.65,65,21,PROV-103
 PROD-0079,Energizante V1,Bebidas,6.33,7.49,79,13,PROV-110
 PROD-0080,Memoria RAM 16GB V5,Electrónica,103.22,153.53,101,16,PROV-102
@@ -85,7 +85,7 @@ PROD-0083,Arroz Extra 1kg V4,Abarrotes,7.71,9.85,117,14,PROV-107
 PROD-0084,Crema de Leche V3,Lácteos,5.12,6.83,123,24,PROV-107
 PROD-0085,Jugo de Naranja 1L V3,Bebidas,6.89,9.07,22,18,PROV-108
 PROD-0086,Mantequilla con sal V5,Lácteos,5.08,6.23,7,25,PROV-106
-PROD-0087,Mantequilla con sal V2,Lácteos,3.16,3.8,71,29,PROV-105
+PROD-0087,Mantequilla con sal V2,Lácteos,3.16,3.80,71,29,PROV-105
 PROD-0088,Agua Mineral 500ml V5,Bebidas,7.61,8.88,104,25,PROV-109
 PROD-0089,Mantequilla con sal V4,Lácteos,3.86,4.45,75,17,PROV-107
 PROD-0090,Yogurt de Fresa V5,Lácteos,3.27,4.12,88,23,PROV-109
@@ -97,14 +97,14 @@ PROD-0095,Teclado Mecánico V5,Electrónica,46.23,62.12,87,15,PROV-101
 PROD-0096,Cloro Blanqueador V1,Limpieza,6.67,8.21,18,28,PROV-101
 PROD-0097,Queso Mozzarella V5,Lácteos,7.62,8.89,63,13,PROV-109
 PROD-0098,Sal Yodada V5,Abarrotes,6.43,7.68,133,22,PROV-108
-PROD-0099,Fideos Espagueti V5,Abarrotes,7.93,9.6,15,29,PROV-102
+PROD-0099,Fideos Espagueti V5,Abarrotes,7.93,9.60,15,29,PROV-102
 PROD-0100,Queso Mozzarella V3,Lácteos,5.45,6.44,44,27,PROV-102
 PROD-0101,Leche Entera 1L V4,Lácteos,3.88,4.92,74,11,PROV-104
 PROD-0102,Esponja de Platos V4,Limpieza,1.03,1.23,67,30,PROV-110
 PROD-0103,Mantequilla con sal V1,Lácteos,4.58,5.86,68,14,PROV-102
 PROD-0104,Monitor 24 pulgadas V3,Electrónica,91.28,132.11,73,24,PROV-102
-PROD-0105,Atún en Conserva V3,Abarrotes,5.75,7.7,128,27,PROV-108
-PROD-0106,Arroz Extra 1kg V5,Abarrotes,0.8,0.99,82,29,PROV-105
+PROD-0105,Atún en Conserva V3,Abarrotes,5.75,7.70,128,27,PROV-108
+PROD-0106,Arroz Extra 1kg V5,Abarrotes,0.80,0.99,82,29,PROV-105
 PROD-0107,Mouse Óptico V2,Electrónica,144.48,209.61,147,28,PROV-101
 PROD-0108,Jabón de Manos V1,Limpieza,6.22,7.37,132,30,PROV-108
 PROD-0109,Desinfectante de Pisos V5,Limpieza,3.77,4.95,23,25,PROV-106
@@ -116,19 +116,19 @@ PROD-0114,Gaseosa Cola 2L V3,Bebidas,3.79,4.89,31,10,PROV-110
 PROD-0115,Queso Mozzarella V3,Lácteos,4.63,5.84,23,17,PROV-102
 PROD-0116,Arroz Extra 1kg V2,Abarrotes,4.24,5.48,130,18,PROV-107
 PROD-0117,Azúcar Blanca 1kg V2,Abarrotes,3.93,4.63,48,29,PROV-109
-PROD-0118,Leche Entera 1L V3,Lácteos,6.3,8.32,87,26,PROV-105
+PROD-0118,Leche Entera 1L V3,Lácteos,6.30,8.32,87,26,PROV-105
 PROD-0119,Memoria RAM 16GB V3,Electrónica,126.43,173.71,125,14,PROV-108
 PROD-0120,Cerveza Artesanal V3,Bebidas,2.99,3.89,96,24,PROV-106
 PROD-0121,Queso Mozzarella V5,Lácteos,3.37,4.45,105,11,PROV-106
-PROD-0122,Atún en Conserva V4,Abarrotes,3.4,4.36,38,25,PROV-101
-PROD-0123,Crema de Leche V5,Lácteos,2.99,3.5,112,13,PROV-109
+PROD-0122,Atún en Conserva V4,Abarrotes,3.40,4.36,38,25,PROV-101
+PROD-0123,Crema de Leche V5,Lácteos,2.99,3.50,112,13,PROV-109
 PROD-0124,Arroz Extra 1kg V2,Abarrotes,3.57,4.57,39,12,PROV-108
-PROD-0125,Esponja de Platos V5,Limpieza,5.7,7.3,84,27,PROV-107
-PROD-0126,Cloro Blanqueador V5,Limpieza,0.77,0.9,73,17,PROV-102
+PROD-0125,Esponja de Platos V5,Limpieza,5.70,7.30,84,27,PROV-107
+PROD-0126,Cloro Blanqueador V5,Limpieza,0.77,0.90,73,17,PROV-102
 PROD-0127,Arroz Extra 1kg V1,Abarrotes,3.83,4.94,7,11,PROV-106
 PROD-0128,Memoria RAM 16GB V3,Electrónica,59.35,73.81,135,23,PROV-110
 PROD-0129,Queso Mozzarella V2,Lácteos,1.09,1.44,61,25,PROV-110
-PROD-0130,Queso Mozzarella V4,Lácteos,5.28,6.56,2,24,PROV-105
+PROD-0130,Queso Mozzarella V4,Lácteos,5.28,6.56,1,24,PROV-105
 PROD-0131,Gaseosa Cola 2L V1,Bebidas,3.81,4.64,150,19,PROV-107
 PROD-0132,Cloro Blanqueador V3,Limpieza,1.99,2.44,123,13,PROV-104
 PROD-0133,Sal Yodada V3,Abarrotes,4.81,6.49,75,10,PROV-107
@@ -146,57 +146,58 @@ PROD-0144,Crema de Leche V2,Lácteos,3.41,4.17,138,23,PROV-110
 PROD-0145,Mantequilla con sal V1,Lácteos,6.75,8.59,71,11,PROV-106
 PROD-0146,Mantequilla con sal V4,Lácteos,7.63,10.08,25,21,PROV-109
 PROD-0147,Detergente Líquido V4,Limpieza,2.57,3.45,116,12,PROV-104
-PROD-0148,Agua Mineral 500ml V1,Bebidas,6.4,7.67,32,28,PROV-104
+PROD-0148,Agua Mineral 500ml V1,Bebidas,6.40,7.67,32,28,PROV-104
 PROD-0149,Audífonos Bluetooth V5,Electrónica,36.31,53.05,84,14,PROV-110
 PROD-0150,Memoria RAM 16GB V2,Electrónica,148.19,201.84,44,13,PROV-101
 PROD-0151,Leche Entera 1L V3,Lácteos,6.42,7.69,82,10,PROV-103
 PROD-0152,Detergente Líquido V2,Limpieza,6.06,7.61,16,25,PROV-108
 PROD-0153,Jabón de Manos V5,Limpieza,1.32,1.65,11,26,PROV-105
-PROD-0154,Atún en Conserva V1,Abarrotes,0.96,1.2,102,23,PROV-102
+PROD-0154,Atún en Conserva V1,Abarrotes,0.96,1.20,102,23,PROV-102
 PROD-0155,Atún en Conserva V4,Abarrotes,1.05,1.22,37,12,PROV-103
-PROD-0156,Jabón de Manos V5,Limpieza,4.61,5.6,135,19,PROV-108
-PROD-0157,Energizante V4,Bebidas,1.24,1.6,141,16,PROV-107
+PROD-0156,Jabón de Manos V5,Limpieza,4.61,5.60,135,19,PROV-108
+PROD-0157,Energizante V4,Bebidas,1.24,1.60,141,16,PROV-107
 PROD-0158,Aceite de Girasol 1L V4,Abarrotes,3.04,3.77,106,13,PROV-106
 PROD-0159,Fideos Espagueti V3,Abarrotes,3.31,3.91,121,12,PROV-102
-PROD-0160,Mouse Óptico V4,Electrónica,19.0,27.01,33,27,PROV-101
+PROD-0160,Mouse Óptico V4,Electrónica,19.00,27.01,33,27,PROV-101
 PROD-0161,Energizante V5,Bebidas,2.97,3.49,90,23,PROV-101
 PROD-0162,Jabón de Manos V3,Limpieza,3.14,3.97,54,14,PROV-108
 PROD-0163,Leche Entera 1L V3,Lácteos,6.84,8.37,71,28,PROV-104
-PROD-0164,Sal Yodada V5,Abarrotes,5.1,6.52,6,29,PROV-105
+PROD-0164,Sal Yodada V5,Abarrotes,5.10,6.52,6,29,PROV-105
 PROD-0165,Monitor 24 pulgadas V3,Electrónica,106.89,138.18,86,21,PROV-101
 PROD-0166,Queso Mozzarella V5,Lácteos,5.43,6.32,7,12,PROV-109
-PROD-0167,Mantequilla con sal V4,Lácteos,3.9,4.61,79,20,PROV-110
+PROD-0167,Mantequilla con sal V4,Lácteos,3.90,4.61,79,20,PROV-110
 PROD-0168,Agua Mineral 500ml V1,Bebidas,1.67,2.17,12,12,PROV-105
 PROD-0169,Atún en Conserva V4,Abarrotes,4.14,5.13,69,16,PROV-109
 PROD-0170,Disco Duro SSD 1TB V4,Electrónica,21.08,29.59,124,26,PROV-105
 PROD-0171,Audífonos Bluetooth V4,Electrónica,147.74,179.72,52,19,PROV-104
 PROD-0172,Yogurt de Fresa V3,Lácteos,2.96,3.41,110,15,PROV-103
-PROD-0173,Sal Yodada V2,Abarrotes,4.25,5.6,90,12,PROV-107
+PROD-0173,Sal Yodada V2,Abarrotes,4.25,5.60,90,12,PROV-107
 PROD-0174,Cable HDMI V1,Electrónica,71.66,87.67,80,28,PROV-107
 PROD-0175,Cerveza Artesanal V4,Bebidas,2.67,3.29,83,15,PROV-110
 PROD-0176,Atún en Conserva V3,Abarrotes,1.16,1.53,62,23,PROV-110
 PROD-0177,Sal Yodada V1,Abarrotes,3.47,4.21,86,17,PROV-106
 PROD-0178,Leche Entera 1L V5,Lácteos,5.25,6.59,49,21,PROV-106
-PROD-0179,Queso Mozzarella V1,Lácteos,1.6,1.9,39,30,PROV-102
+PROD-0179,Queso Mozzarella V1,Lácteos,1.60,1.90,39,30,PROV-102
 PROD-0180,Mantequilla con sal V4,Lácteos,6.16,8.02,114,28,PROV-110
-PROD-0181,Esponja de Platos V2,Limpieza,3.8,4.73,77,18,PROV-110
-PROD-0182,Disco Duro SSD 1TB V5,Electrónica,15.76,21.1,9,11,PROV-106
+PROD-0181,Esponja de Platos V2,Limpieza,3.80,4.73,77,18,PROV-110
+PROD-0182,Disco Duro SSD 1TB V5,Electrónica,15.76,21.10,9,11,PROV-106
 PROD-0183,Detergente Líquido V1,Limpieza,5.11,6.39,118,28,PROV-109
 PROD-0184,Cargador Carga Rápida V5,Electrónica,99.52,129.02,121,26,PROV-103
-PROD-0185,Cargador Carga Rápida V1,Electrónica,122.59,177.9,21,26,PROV-103
+PROD-0185,Cargador Carga Rápida V1,Electrónica,122.59,177.90,21,26,PROV-103
 PROD-0186,Audífonos Bluetooth V4,Electrónica,148.69,201.81,40,21,PROV-106
 PROD-0187,Cloro Blanqueador V4,Limpieza,6.31,8.11,13,30,PROV-106
-PROD-0188,Disco Duro SSD 1TB V1,Electrónica,85.9,113.04,64,29,PROV-103
+PROD-0188,Disco Duro SSD 1TB V1,Electrónica,85.90,113.04,64,29,PROV-103
 PROD-0189,Detergente Líquido V5,Limpieza,5.48,7.31,79,30,PROV-107
 PROD-0190,Crema de Leche V1,Lácteos,2.82,3.46,84,14,PROV-109
 PROD-0191,Cable HDMI V5,Electrónica,57.47,75.22,46,16,PROV-106
-PROD-0192,Aceite de Girasol 1L V2,Abarrotes,8.0,9.45,75,13,PROV-109
+PROD-0192,Aceite de Girasol 1L V2,Abarrotes,8.00,9.45,75,13,PROV-109
 PROD-0193,Energizante V1,Bebidas,5.46,7.24,33,29,PROV-107
 PROD-0194,Queso Mozzarella V2,Lácteos,6.74,8.79,42,24,PROV-101
 PROD-0195,Fideos Espagueti V2,Abarrotes,7.77,9.88,114,17,PROV-109
 PROD-0196,Yogurt de Fresa V4,Lácteos,7.28,8.65,146,24,PROV-108
 PROD-0197,Cloro Blanqueador V5,Limpieza,4.46,5.99,51,29,PROV-103
-PROD-0198,Detergente Líquido V4,Limpieza,7.06,8.9,26,26,PROV-102
+PROD-0198,Detergente Líquido V4,Limpieza,7.06,8.90,26,26,PROV-102
 PROD-0199,Detergente Líquido V2,Limpieza,2.55,3.39,37,23,PROV-102
 PROD-0200,Mantequilla con sal V3,Lácteos,7.48,9.22,101,26,PROV-106
 PROD-0201,Larra,Granos,4.00,8.00,50,10,PROV-104
+PROD-0202,Azucar,Granos,1.00,1.25,25,10,PROV-110
