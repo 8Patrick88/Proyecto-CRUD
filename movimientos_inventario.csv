@@ -1,1 +1,2 @@
 idMovimiento,usuario,fecha,hora,tipo,idProducto,nombreProducto,cantidadAnterior,cantidadNueva,observacion
+MOV-0001,Administrador,2026-06-23,19:05:55,Alta de producto,PROD-0203,Leche,0,3,Registro inicial de producto

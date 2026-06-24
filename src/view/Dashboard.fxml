@@ -88,14 +88,14 @@
             </center>
         </BorderPane>
 
-        <StackPane alignment="BOTTOM_RIGHT">
+        <StackPane alignment="BOTTOM_RIGHT" maxHeight="-1.0" maxWidth="-1.0" pickOnBounds="false" StackPane.alignment="BOTTOM_RIGHT">
             <children>
-                <Button fx:id="btnNotificaciones" mnemonicParsing="false" onAction="#mostrarNotificaciones" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 30; -fx-padding: 14 18; -fx-font-size: 16; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.25), 8, 0, 0, 3);" text="🔔">
+                <Button fx:id="btnNotificaciones" mnemonicParsing="false" onAction="#mostrarNotificaciones" pickOnBounds="true" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 30; -fx-padding: 14 18; -fx-font-size: 16; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.25), 8, 0, 0, 3);" text="🔔">
                     <StackPane.margin>
                         <Insets bottom="24.0" right="24.0" />
                     </StackPane.margin>
                 </Button>
-                <Label fx:id="lblContadorNotificaciones" alignment="CENTER" maxHeight="22.0" maxWidth="22.0" minHeight="22.0" minWidth="22.0" style="-fx-background-color: #c0392b; -fx-background-radius: 11; -fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" text="0" StackPane.alignment="TOP_RIGHT">
+                <Label fx:id="lblContadorNotificaciones" alignment="CENTER" maxHeight="22.0" maxWidth="22.0" minHeight="22.0" minWidth="22.0" mouseTransparent="true" pickOnBounds="false" style="-fx-background-color: #c0392b; -fx-background-radius: 11; -fx-text-fill: white; -fx-font-size: 11; -fx-font-weight: bold;" text="0" StackPane.alignment="TOP_RIGHT">
                     <StackPane.margin>
                         <Insets bottom="48.0" right="18.0" />
                     </StackPane.margin>
